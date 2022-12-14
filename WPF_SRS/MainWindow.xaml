@@ -5,8 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_SRS"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="605" Width="1055">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="500*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="500*"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="500*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3">
+            <Label Content="學生" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="100,0,0,0"/>
+            <ComboBox x:Name="cmbStudent" Width="300" Height="40" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        </StackPanel>
+        <TabControl Grid.Row="1">
+            <TabItem Header="以教師分類課程">
+                <TreeView Background="#FFE6E3FD">
+                    
+                </TreeView>
+            </TabItem>
+            <TabItem Header="所有課程">
 
+            </TabItem>
+        </TabControl>
+        <StatusBar Grid.Row="6" Grid.ColumnSpan="3">
+            <StatusBarItem>
+                <Label Content="status" Width="400" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="100,0,0,0"/>
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </Window>
