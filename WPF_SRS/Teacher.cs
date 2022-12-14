@@ -11,8 +11,9 @@ namespace WPF_SRS
     {
         public string TeacherName { get; set; }
         public ObservableCollection<Course> TeachingCourses { get; set; }
-        public Teacher()
+        public Teacher(string teacherName)
         {
+            this.TeacherName = teacherName;
             this.TeachingCourses = new ObservableCollection<Course>();
         }
     }
