@@ -12,6 +12,7 @@ namespace WPF_SRS
         List<Teacher> teachers = new List<Teacher>();
         List<Course> courses = new List<Course>();
         List<Student> students = new List<Student>();
+        List<Record> records = new List<Record>();
 
         Student selectedStudent = null;
         Teacher selectedTeacher = null;
@@ -80,6 +81,31 @@ namespace WPF_SRS
             {
                 selectedTeacher = trvTeacher.SelectedItem as Teacher;
                 statusLabel.Content = "選取老師：" + selectedTeacher.ToString();
+            }
+            if(trvTeacher.SelectedItem is Course)
+            {
+                selectedCourse = trvTeacher.SelectedItem as Course;
+                statusLabel.Content = selectedCourse.ToString();
+            }
+        }
+
+        private void lbCourse_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            selectedCourse = lbCourse.SelectedItem as Course;
+            statusLabel.Content = selectedCourse.ToString();
+        }
+
+        private void registerButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(selectedStudent != null && selectedCourse != null)
+            {
+                Record currentRecord = new Record();
+                {
+                    //SelectedStudent = selectedStudent
+                }
+            }else
+            {
+                MessageBox.Show("請選擇學生或課程", "資料不足");
             }
         }
     }

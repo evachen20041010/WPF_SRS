@@ -17,5 +17,9 @@ namespace WPF_SRS
         {
             Tutor = tutor;
         }
+        public override string ToString()
+        {
+            return $"授課教師 {Tutor.TeacherName}: [{OpeningClass}]{CourseName}({Type}{Point}學分)";
+        }
     }
 }

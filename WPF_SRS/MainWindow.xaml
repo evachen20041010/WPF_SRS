@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_SRS"
         mc:Ignorable="d"
-        Title="MainWindow" Height="605" Width="1055">
+        Title="MainWindow" Height="605" Width="1055" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -50,7 +50,7 @@
                 </TreeView>
             </TabItem>
             <TabItem Header="所有課程">
-                <ListBox x:Name="lbCourse">
+                <ListBox x:Name="lbCourse" SelectionChanged="lbCourse_SelectionChanged">
                     <ListBox.Resources>
                         <DataTemplate DataType="{x:Type local:Course}">
                             <StackPanel Orientation="Vertical">
@@ -81,8 +81,17 @@
         </TabControl>
         <StatusBar Grid.Row="2" Grid.ColumnSpan="3">
             <StatusBarItem>
-                <Label x:Name="statusLabel" Content="status" Width="400" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="100,0,0,0"/>
+                <Label x:Name="statusLabel" Content="status" Width="865" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="100,0,0,0"/>
             </StatusBarItem>
         </StatusBar>
+        <ListView x:Name="lvRecord" Grid.Column="2" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="registerButton" Grid.Column="1" Content="-&gt;" HorizontalAlignment="Center" Margin="0,69,0,0" Grid.Row="1" VerticalAlignment="Top" Height="40" Width="80" Click="registerButton_Click"/>
+        <Button x:Name="withdrawButton" Grid.Column="1" Content="&lt;-" HorizontalAlignment="Center" Margin="0,155,0,0" Grid.Row="1" VerticalAlignment="Top" Height="40" Width="80"/>
     </Grid>
 </Window>
