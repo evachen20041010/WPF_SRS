@@ -16,5 +16,9 @@ namespace WPF_SRS
             this.TeacherName = teacherName;
             this.TeachingCourses = new ObservableCollection<Course>();
         }
+        public override string ToString()
+        {
+            return $"{TeacherName}";
+        }
     }
 }

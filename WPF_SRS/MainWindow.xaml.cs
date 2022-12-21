@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace WPF_SRS
@@ -10,10 +11,32 @@ namespace WPF_SRS
     {
         List<Teacher> teachers = new List<Teacher>();
         List<Course> courses = new List<Course>();
+        List<Student> students = new List<Student>();
+
+        Student selectedStudent = null;
+        Teacher selectedTeacher = null;
+        Course selectedCourse = null;
         public MainWindow()
         {
             InitializeComponent();
 
+            InitialCourse();
+
+            InitializeStudent();
+        }
+
+        private void InitializeStudent()
+        {
+            Student student1 = new Student() { StudentID = "5A9G0001", StudentName = "陳小明" };
+            students.Add(student1);
+            Student student2 = new Student() { StudentID = "5A9G0002", StudentName = "王小美" };
+            students.Add(student2);
+            cmbStudent.ItemsSource = students;
+            cmbStudent.SelectedIndex = 0;
+        }
+
+        private void InitialCourse()
+        {
             //建立測試資料
             Teacher teacher1 = new Teacher("陳定宏");
             //Course coursela = new Course(teacher1) {CourseNmae="視窗程式設計",OpeningClass="五專三甲",Point=3,Type="必修" };
@@ -32,7 +55,7 @@ namespace WPF_SRS
 
             teachers.Add(teacher2);
 
-            trvteacher.ItemsSource = teachers;
+            trvTeacher.ItemsSource = teachers;
 
             foreach (Teacher teacher in teachers)
             {
@@ -43,6 +66,21 @@ namespace WPF_SRS
             }
 
             lbCourse.ItemsSource = courses;
+        }
+
+        private void cmbStudent_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            selectedStudent = (Student)cmbStudent.SelectedItem;
+            statusLabel.Content = "選課學生：" + selectedStudent.ToString();
+        }
+
+        private void trvTeacher_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if(trvTeacher.SelectedItem is Teacher)
+            {
+                selectedTeacher = trvTeacher.SelectedItem as Teacher;
+                statusLabel.Content = "選取老師：" + selectedTeacher.ToString();
+            }
         }
     }
 }
