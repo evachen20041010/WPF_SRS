@@ -5,8 +5,93 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_SRS"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="605" Width="1055" WindowStartupLocation="CenterScreen">
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="500*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="500*"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="500*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3">
+            <Label Content="學生" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="100,0,0,0"/>
+            <ComboBox x:Name="cmbStudent" Width="300" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" SelectionChanged="cmbStudent_SelectionChanged"/>
+        </StackPanel>
+        <TabControl Grid.Row="1">
+            <TabItem Header="以教師分類課程">
+                <TreeView x:Name="trvTeacher" Background="#FFE6E3FD" SelectedItemChanged="trvTeacher_SelectedItemChanged">
+                    <TreeView.Resources>
+                        <HierarchicalDataTemplate DataType="{x:Type local:Teacher}" ItemsSource="{Binding TeachingCourses}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="18" Height="18" Source="/teacher.png"/>
+                                <TextBlock Text="{Binding TeacherName}" FontWeight="Bold"/>
+                                <TextBlock Text="("/>
+                                <TextBlock Text="{Binding TeachingCourses.Count}" Foreground="Red"/>
+                                <TextBlock Text=")"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                        <DataTemplate DataType="{x:Type local:Course}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Height="18" Width="18" Source="/book.png"/>
+                                <TextBlock Text="{Binding CourseName}" Foreground="#FF00841A" TextDecorations="Underline"/>
+                                <TextBlock Text="("/>
+                                <TextBlock Text="{Binding OpeningClass}"/>
+                                <TextBlock Text="/"/>
+                                <TextBlock Text="{Binding Type}"/>
+                                <TextBlock Text="{Binding Point}"/>
+                                <TextBlock Text="學分)"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </TreeView.Resources>
+                </TreeView>
+            </TabItem>
+            <TabItem Header="所有課程">
+                <ListBox x:Name="lbCourse" SelectionChanged="lbCourse_SelectionChanged">
+                    <ListBox.Resources>
+                        <DataTemplate DataType="{x:Type local:Course}">
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="授課教師："/>
+                                    <TextBlock Text="{Binding Tutor.TeacherName}" FontWeight="Bold"/>
+                                </StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150"/>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="120"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding CourseName}" Grid.Column="0" FontWeight="Bold" Foreground="Blue" HorizontalAlignment="Left"/>
+                                    <TextBlock Text="{Binding OpeningClass}" Grid.Column="1"/>
+                                    <StackPanel Orientation="Horizontal" Grid.Column="2">
+                                        <TextBlock Text="("/>
+                                        <TextBlock Text="{Binding Type}"/>
+                                        <TextBlock Text="{Binding Point}"/>
+                                        <TextBlock Text="學分)"/>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.Resources>
+                </ListBox>
+            </TabItem>
+        </TabControl>
+        <StatusBar Grid.Row="2" Grid.ColumnSpan="3">
+            <StatusBarItem>
+                <Label x:Name="statusLabel" Content="status" Width="865" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="100,0,0,0"/>
+            </StatusBarItem>
+        </StatusBar>
+        <ListView x:Name="lvRecord" Grid.Column="2" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="registerButton" Grid.Column="1" Content="-&gt;" HorizontalAlignment="Center" Margin="0,69,0,0" Grid.Row="1" VerticalAlignment="Top" Height="40" Width="80" Click="registerButton_Click"/>
+        <Button x:Name="withdrawButton" Grid.Column="1" Content="&lt;-" HorizontalAlignment="Center" Margin="0,155,0,0" Grid.Row="1" VerticalAlignment="Top" Height="40" Width="80"/>
     </Grid>
 </Window>
