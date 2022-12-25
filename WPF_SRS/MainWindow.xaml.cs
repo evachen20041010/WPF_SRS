@@ -17,6 +17,7 @@ namespace WPF_SRS
         Student selectedStudent = null;
         Teacher selectedTeacher = null;
         Course selectedCourse = null;
+        Record selectedRecord = null;
         public MainWindow()
         {
             InitializeComponent();
@@ -97,15 +98,49 @@ namespace WPF_SRS
 
         private void registerButton_Click(object sender, RoutedEventArgs e)
         {
-            if(selectedStudent != null && selectedCourse != null)
-            {
-                Record currentRecord = new Record();
-                {
-                    //SelectedStudent = selectedStudent
-                }
-            }else
+            if(selectedStudent == null || selectedCourse == null)
             {
                 MessageBox.Show("請選擇學生或課程", "資料不足");
+            }else
+            {
+                Record currentRecord = new Record()
+                {
+                    SelectedStudent = selectedStudent,
+                    SelectedCourse = selectedCourse
+                };
+                foreach(Record r in records)
+                {
+                    if(r.Equals(currentRecord))
+                    {
+                        MessageBox.Show($"{selectedStudent.StudentName} 已經選過 {selectedCourse.CourseName} 了，請重新選擇未選過的課程");
+                        return; 
+                    }
+                }
+                records.Add(currentRecord);
+                lvRecord.ItemsSource = records;
+                lvRecord.Items.Refresh();
+            }           
+        }
+
+        private void lvRecord_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (lvRecord.SelectedItem != null)
+            {
+                selectedRecord = lvRecord.SelectedItem as Record;
+                statusLabel.Content = selectedRecord;
+            }
+        }
+
+        private void withdrawButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(selectedRecord != null)
+            {
+                records.Remove(selectedRecord);
+                lvRecord.ItemsSource = records;
+                lvRecord.Items.Refresh();
+            }else
+            {
+                MessageBox.Show("請選擇要退選的紀錄");
             }
         }
     }
