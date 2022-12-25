@@ -97,7 +97,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="registerButton" Grid.Column="1" Content="-&gt;" HorizontalAlignment="Center" Margin="0,69,0,0" Grid.Row="1" VerticalAlignment="Top" Height="40" Width="80" Click="registerButton_Click"/>
+        <Button x:Name="registerButton" Grid.Column="1" Content="-&gt;" HorizontalAlignment="Center" Margin="0,75,0,0" Grid.Row="1" VerticalAlignment="Top" Height="40" Width="80" Click="registerButton_Click"/>
         <Button x:Name="withdrawButton" Grid.Column="1" Content="&lt;-" HorizontalAlignment="Center" Margin="0,155,0,0" Grid.Row="1" VerticalAlignment="Top" Height="40" Width="80" Click="withdrawButton_Click"/>
+        <Button x:Name="saveButton" Grid.Column="1" Content="儲存選課紀錄" HorizontalAlignment="Center" Margin="0,236,0,0" Grid.Row="1" VerticalAlignment="Top" Height="40" Width="80" Click="saveButton_Click"/>
     </Grid>
 </Window>

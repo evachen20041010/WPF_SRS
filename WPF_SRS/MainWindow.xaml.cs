@@ -1,5 +1,11 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Text.Unicode;
 using System.Windows;
 
 namespace WPF_SRS
@@ -29,10 +35,20 @@ namespace WPF_SRS
 
         private void InitializeStudent()
         {
+            /*
             Student student1 = new Student() { StudentID = "5A9G0001", StudentName = "陳小明" };
             students.Add(student1);
             Student student2 = new Student() { StudentID = "5A9G0002", StudentName = "王小美" };
             students.Add(student2);
+            */
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.Filter = "json檔案|*.json|所有檔案|*.*";
+            fileDialog.Title = "選擇讀取學生資料的檔案";
+            if (fileDialog.ShowDialog() == true)
+            {
+                string fileText = File.ReadAllText(fileDialog.FileName);
+                students = JsonSerializer.Deserialize<List<Student>>(fileText);
+            }
             cmbStudent.ItemsSource = students;
             cmbStudent.SelectedIndex = 0;
         }
@@ -47,15 +63,20 @@ namespace WPF_SRS
             teacher1.TeachingCourses.Add(new Course(teacher1) { CourseName = "視窗程式設計", OpeningClass = "四技二甲", Point = 3, Type = "必修" });
             teacher1.TeachingCourses.Add(new Course(teacher1) { CourseName = "視窗程式設計", OpeningClass = "四技三乙", Point = 3, Type = "必修" });
             teacher1.TeachingCourses.Add(new Course(teacher1) { CourseName = "視窗程式設計", OpeningClass = "四技三丙", Point = 3, Type = "必修" });
-
             teachers.Add(teacher1);
 
             Teacher teacher2 = new Teacher("杜俊育");
             teacher2.TeachingCourses.Add(new Course(teacher2) { CourseName = "行動無線通訊", OpeningClass = "碩研資工一甲等合開", Point = 3, Type = "選修" });
             teacher2.TeachingCourses.Add(new Course(teacher2) { CourseName = "行動電信網路應用", OpeningClass = "四技資工三甲等合開", Point = 3, Type = "選修" });
             teacher2.TeachingCourses.Add(new Course(teacher2) { CourseName = "雲端人工智慧運算實務", OpeningClass = "四技資工四甲等合開", Point = 3, Type = "選修" });
-
             teachers.Add(teacher2);
+
+            Teacher teacher3 = new Teacher("張勝麟");
+            teacher3.TeachingCourses.Add(new Course(teacher3) { CourseName = "線性代數", OpeningClass = "四技資工二乙", Point = 3, Type = "必修" });
+            teacher3.TeachingCourses.Add(new Course(teacher3) { CourseName = "微積分(二)", OpeningClass = "四技資工四甲等合開", Point = 3, Type = "管制必修" });
+            teacher3.TeachingCourses.Add(new Course(teacher3) { CourseName = "基礎數學(二)", OpeningClass = "五專資工一甲", Point = 2, Type = "必修" });
+            teacher3.TeachingCourses.Add(new Course(teacher3) { CourseName = "基礎數學演練(二)", OpeningClass = "五專資工一甲", Point = 1, Type = "系定選修" });
+            teachers.Add(teacher3);
 
             trvTeacher.ItemsSource = teachers;
 
@@ -141,6 +162,25 @@ namespace WPF_SRS
             }else
             {
                 MessageBox.Show("請選擇要退選的紀錄");
+            }
+        }
+
+        private void saveButton_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog fileDialog = new SaveFileDialog();
+            fileDialog.Filter = "Json檔案|*.json";
+            fileDialog.Title = "儲存選課紀錄";
+
+            if (fileDialog.ShowDialog() == true)
+            {
+                JsonSerializerOptions options = new()
+                {
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    WriteIndented = true
+                };
+                string jsonDocument = JsonSerializer.Serialize<List<Record>>(records, options);
+                File.WriteAllText(fileDialog.FileName, jsonDocument);
             }
         }
     }
